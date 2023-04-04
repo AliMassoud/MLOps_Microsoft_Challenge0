@@ -8,7 +8,7 @@ inputs:
     path: azureml:diabetes-dev-folder:1
   reg_rate: 0.01
 environment: azureml:AzureML-sklearn-0.24-ubuntu18.04-py37-cpu@latest
-compute: azureml:def-instance
+compute: azureml:def-cluster
 experiment_name: chal0-exp0
 description: |
   # it is the first job to be executed on chal0 of MS_MLOps challenge
