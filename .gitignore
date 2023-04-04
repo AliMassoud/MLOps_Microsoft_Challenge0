@@ -2,6 +2,7 @@
 Learning_Notes.txt
 Azure_Notes.txt
 Dockerfile
+workflow.sh
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

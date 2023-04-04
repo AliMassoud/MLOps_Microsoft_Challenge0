@@ -38,10 +38,11 @@ jobs:
     # - name: create a compute instance
     #   run: |
     #     az ml compute create --name ${{github.event.inputs.instance_name}} --size STANDARD_DS11_V2 --type ComputeInstance  --resource-group ${{github.event.inputs.resource_group}} --workspace-name ${{github.event.inputs.workspace}}
-    # - name: add a data asset to azure workspace
-    #   run: |
-    #     az ml data create --name diabetes-dev-folder --path "/home/alimassoud/onedrive/MLOps/MLOps_MS_Chal0/experimentation/data"
-    #     echo 'HELLOO'
-    - name: create an Azure ML job
+    - name: add a data asset to azure workspace
       run: |
-        az ml job create --file "src/job.yml" --resource-group "def_resource_group" --workspace-name "def_workspace"
+        echo 'hey'
+        az ml data create --name diabetes-dev-folder-2 --path "/home/alimassoud/onedrive/MLOps/MLOps_MS_Chal0/experimentation/data" --resource-group "def_resource_group" --workspace-name "def_workspace"
+        echo 'HELLOO'
+    # - name: create an Azure ML job
+    #   run: |
+    #     az ml job create --file "src/job.yml" --resource-group "def_resource_group" --workspace-name "def_workspace"
