@@ -44,4 +44,6 @@ jobs:
     #     echo 'HELLOO'
     - name: create an Azure ML job
       run: |
+        echo cwd
+        ls
         az ml job create --file "/src/job.yml" --resource-group "def_resource_group" --workspace-name "def_workspace"
