@@ -37,7 +37,7 @@ jobs:
     #     az configure --defaults workspace=${{github.event.inputs.workspace}}
     - name: create a compute instance
       run: |
-        az ml compute create --name 'testing' --size STANDARD_DS11_V2 --type ComputeInstance  --resource-group "def_resource_group" --workspace-name "def_workspace"
+        az ml compute create --name ${{github.event.inputs.instance_name}} --size STANDARD_DS11_V2 --type ComputeInstance  --resource-group "def_resource_group" --workspace-name "def_workspace"
     # - name: add a data asset to azure workspace
     #   run: |
     #     echo 'hey'
