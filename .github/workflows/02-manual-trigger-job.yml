@@ -5,9 +5,9 @@ on:
     inputs:
       resource_group:
         description: resource group name
-        type: string
         required: true
         default: def_resource_group
+        type: string
       workspace:
         description: workspace name
         required: true
@@ -32,7 +32,7 @@ jobs:
         creds: ${{secrets.AZURE_CREDENTIALS}}
     - name: create azure workspace and setting it as default
       run: |
-        az configure --defaults group=${{github.event.inputs.resource_group}}
+        echo "Hey"        
         az ml workspace create --name ${{github.event.inputs.workspace}}
         az configure --defaults workspace=${{github.event.inputs.workspace}}
     - name: create a compute instance
