@@ -11,12 +11,12 @@ on:
       workspace:
         description: workspace name
         required: true
-        default: def_workspace
+        default: workspace2
         type: string
       instance_name:
         description: compute instance name
         required: true
-        default: def_compute_instance
+        default: instance1
         type: string
 jobs:
   train:
@@ -32,10 +32,6 @@ jobs:
         creds: ${{secrets.AZURE_CREDENTIALS}}
     - name: create azure workspace and setting it as default
       run: |
-        echo "Hey"
-        az --help
-        echo '-------------------------------'
-        az ml --help
         az ml workspace create --name ${{github.event.inputs.workspace}} --resource-group ${{github.event.inputs.resource_group}}        
         echo 'Hey2'
         az configure --defaults workspace=${{github.event.inputs.workspace}}
