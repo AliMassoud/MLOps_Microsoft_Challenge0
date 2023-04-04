@@ -1,3 +1,7 @@
+# Notes
+Learning_Notes.txt
+Azure_Notes.txt
+Dockerfile
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -73,6 +77,10 @@ docs/_build/
 
 # PyBuilder
 target/
+
+# MLFlow
+mlruns/
+mydb.sqlite
 
 # Jupyter Notebook
 .ipynb_checkpoints
