@@ -32,12 +32,16 @@ jobs:
         creds: ${{secrets.AZURE_CREDENTIALS}}
     - name: create azure workspace and setting it as default
       run: |
-        echo "Hey"        
+        echo "Hey"
+        az --help
+        echo '-------------------------------'
+        az ml --help
+        az ml workspace create --name ${{github.event.inputs.workspace}} --resource-group ${{github.event.inputs.resource_group}}        
         echo 'Hey2'
         az configure --defaults workspace=${{github.event.inputs.workspace}}
     - name: create a compute instance
       run: |
-        az ml compute create --name ${{github.event.inputs.instance_name}} --size STANDARD_DS11_V2 --type ComputeInstance
+        az ml compute create --name ${{github.event.inputs.instance_name}} --size STANDARD_DS11_V2 --type ComputeInstance  --resource-group ${{github.event.inputs.resource_group}} --workspace-name ${{github.event.inputs.workspace}}
     - name: add a data asset to azure workspace
       run: |
         az ml data create --name diabetes-dev-folder --path "/home/alimassoud/onedrive/MLOps/MLOps_MS_Chal0/experimentation/data"
