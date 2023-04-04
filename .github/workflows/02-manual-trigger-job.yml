@@ -41,7 +41,7 @@ jobs:
     - name: add a data asset to azure workspace
       run: |
         echo 'hey'
-        az ml data create --name diabetes-dev-folder-2 --path "/experimentation/data" --resource-group "def_resource_group" --workspace-name "def_workspace"
+        az ml data create --name diabetes-dev-folder-2 --path "experimentation/data" --resource-group "def_resource_group" --workspace-name "def_workspace"
         echo 'HELLOO'
     # - name: create an Azure ML job
     #   run: |
