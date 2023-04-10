@@ -6,7 +6,7 @@ on:
       resource_group:
         description: resource group name
         required: true
-        default: def_resource_group
+        default: def_resource_group_2
         type: string
       region:
         description: region of resource group
@@ -16,7 +16,7 @@ on:
       workspace:
         description: workspace name
         required: true
-        default: workspace2
+        default: workspace3
         type: string
       instance_name:
         description: compute instance name
@@ -31,8 +31,12 @@ jobs:
     - name: Check out repo
       uses: actions/checkout@main
 
-    # - name: Install az ml extension
-    #   run: az extension add -n ml -y
+    - name: add azure ML extension
+      uses: Azure/CLI@v1
+      with:
+        inlineScript: | 
+          #!/bin/bash
+          az extension add -n ml -y
 
     - name: Azure login
       uses: azure/login@v1
@@ -57,7 +61,7 @@ jobs:
       with:
         inlineScript: | 
           #!/bin/bash
-          az extension add -n ml -y
+          # az extension add -n ml -y
           if $(az workspace exists --name ${{ github.event.inputs.workspace }}); then
               echo "workspace already exists with this name"
           else
