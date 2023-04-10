@@ -31,8 +31,8 @@ jobs:
     - name: Check out repo
       uses: actions/checkout@main
 
-    - name: Install az ml extension
-      run: az extension add -n ml -y
+    # - name: Install az ml extension
+    #   run: az extension add -n ml -y
 
     - name: Azure login
       uses: azure/login@v1
@@ -43,21 +43,29 @@ jobs:
       uses: Azure/CLI@v1
       with:
         inlineScript: | 
+          # #!/bin/bash
+          # if $(az group exists --name ${{ github.event.inputs.resource_group }}) ; then
+          #   echo "Azure resource group already exists, skipping creation..."
+          # else
+          az group create --name ${{ github.event.inputs.resource_group }} --location ${{ github.event.inputs.region }}
+          # az configure --defaults group=${{ github.event.inputs.resource_group }}
+          # echo "Azure resource group created"
+          # fi
+
+    - name: create a ML workspace on Azure
+      uses: Azure/CLI@v1
+      with:
+        inlineScript: | 
           #!/bin/bash
-          if $(az group exists --name ${{ github.event.inputs.resource_group }}) ; then
-            echo "Azure resource group already exists, skipping creation..."
-          else
-            az group create --name ${{ github.event.inputs.resource_group }} --location ${{ github.event.inputs.region }}
-            az configure --defaults group=${{ github.event.inputs.resource_group }}
-            echo "Azure resource group created"
-          fi
+          az extension add -n ml -y
           if $(az workspace exists --name ${{ github.event.inputs.workspace }}); then
-            echo "workspace already exists with this name"
+              echo "workspace already exists with this name"
           else
-            az ml workspace create --name ${{ github.event.inputs.workspace }}
+            az ml workspace create --name ${{ github.event.inputs.workspace }} --resource-group ${{ github.event.inputs.resource_group }}
             az configure --defaults workspace=${{ github.event.inputs.workspace }}
             echo "done! workspace is created"
           fi
+
     # - name: create azure workspace and setting it as default
     #   run: |
     #     chmod +x ./workflow.sh
