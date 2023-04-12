@@ -14,7 +14,6 @@ from sklearn.metrics import roc_auc_score, roc_curve
 
 # define functions
 def main(args):
-    # TO DO: enable autologging
     mlflow.autolog()
 
     # read data
@@ -43,7 +42,7 @@ def get_csvs_df(path):
     return pd.concat((pd.read_csv(f) for f in csv_files), sort=False)
 
 
-# TO DO: add function to split data
+# Function to split data
 def split_data(df):
     X = df.drop(['Diabetic'], axis=1)
     y = df.pop('Diabetic')
