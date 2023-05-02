@@ -69,7 +69,7 @@ jobs:
             az configure --defaults workspace=${{ github.event.inputs.workspace }}
             echo "done! workspace is created"
           fi
-    - name: create a compute instance
+    - name: create a compute cluster
       run: |
         az extension add -n ml -y
         az ml compute create --name ${{github.event.inputs.instance_name}} --size STANDARD_DS11_V2 --max-instances 2 --type AmlCompute --resource-group ${{github.event.inputs.resource_group}} --workspace-name ${{github.event.inputs.workspace}}
