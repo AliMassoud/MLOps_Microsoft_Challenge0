@@ -18,11 +18,11 @@ jobs:
         python-version: '3.8'
     - name: placeHolder
       run: echo "it is a place holder!"
-    # - name: Install Flake8
-    #   run: |
-    #     python -m pip install flake8
-    # - name: Run linting tests
-    #   run: | 
-    #     flake8 src/model/
+    - name: Install Flake8
+      run: |
+        python -m pip install flake8
+    - name: Run linting tests
+      run: | 
+        flake8 src/model/
 
 
