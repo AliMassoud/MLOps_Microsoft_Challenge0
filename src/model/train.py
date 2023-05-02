@@ -88,7 +88,7 @@ def parse_args():
                         type=str,
                         default='experimentation/data/')
     parser.add_argument("--reg_rate", dest='reg_rate',
-                        type=float, default=0.001)
+                        type=float, default=0.01)
 
     # parse args
     args = parser.parse_args()
