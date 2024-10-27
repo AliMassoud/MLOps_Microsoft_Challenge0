@@ -39,9 +39,9 @@ jobs:
     #       az extension add -n ml -y
 
     - name: Azure login
-      uses: azure/login@v1
+      uses: azure/login@v2
       with:
-        creds: ${{secrets.AZURE_CREDENTIALS_2}}
+        creds: ${{secrets.DEPLOY_AZURE_SERVICE_PRINCIPAL}}
 
     - name: create a resource group on Azure
       uses: Azure/CLI@v1
@@ -73,10 +73,10 @@ jobs:
       run: |
         az extension add -n ml -y
         az ml compute create --name ${{github.event.inputs.instance_name}} --size STANDARD_DS11_V2 --max-instances 2 --type AmlCompute --resource-group ${{github.event.inputs.resource_group}} --workspace-name ${{github.event.inputs.workspace}}
-    - name: add a data DEV asset to azure workspace
-      run: |
-        az extension add -n ml -y
-        az ml data create --name diabetes-dev-folder --path "experimentation/data" --resource-group ${{github.event.inputs.resource_group}} --workspace-name ${{github.event.inputs.workspace}}
+    # - name: add a data DEV asset to azure workspace
+    #   run: |
+    #     az extension add -n ml -y
+    #     az ml data create --name diabetes-dev-folder --path "experimentation/data" --resource-group ${{github.event.inputs.resource_group}} --workspace-name ${{github.event.inputs.workspace}}
     - name: add a data PROD asset to azure workspace
       run: |
         az extension add -n ml -y
