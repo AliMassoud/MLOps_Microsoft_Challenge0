@@ -39,7 +39,7 @@ jobs:
     #       az extension add -n ml -y
 
     - name: Azure login
-      uses: azure/login@v2
+      uses: azure/login@v1
       with:
         creds: ${{secrets.DEPLOY_AZURE_SERVICE_PRINCIPAL}}
 
