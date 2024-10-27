@@ -73,10 +73,14 @@ jobs:
       run: |
         az extension add -n ml -y
         az ml compute create --name ${{github.event.inputs.instance_name}} --size STANDARD_DS11_V2 --max-instances 2 --type AmlCompute --resource-group ${{github.event.inputs.resource_group}} --workspace-name ${{github.event.inputs.workspace}}
-    - name: add a data asset to azure workspace
+    - name: add a data DEV asset to azure workspace
       run: |
         az extension add -n ml -y
         az ml data create --name diabetes-dev-folder --path "experimentation/data" --resource-group ${{github.event.inputs.resource_group}} --workspace-name ${{github.event.inputs.workspace}}
+    - name: add a data PROD asset to azure workspace
+      run: |
+        az extension add -n ml -y
+        az ml data create --name diabetes-prod-folder --path "production/data" --resource-group ${{github.event.inputs.resource_group}} --workspace-name ${{github.event.inputs.workspace}}
     - name: create an Azure ML job
       run: |
         az extension add -n ml -y
