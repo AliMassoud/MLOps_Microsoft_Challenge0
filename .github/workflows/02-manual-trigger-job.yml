@@ -27,24 +27,23 @@ on:
 jobs:
   build_env_and_train:
     runs-on: ubuntu-latest
+    environment: Prod_env
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
     steps:
     - name: Check out repo
-      uses: actions/checkout@main
-
-    # - name: add azure ML extension
-    #   uses: Azure/CLI@v1
-    #   with:
-    #     inlineScript: | 
-    #       #!/bin/bash
-    #       az extension add -n ml -y
-
-    - name: Azure login
-      uses: azure/login@v1
+      uses: actions/checkout@v4
       with:
-        creds: ${{secrets.AZURE_CREDENTIALS_2}}
+        path: test_code_check
+    - name: Azure login
+      uses: azure/login@v2
+      with:
+        creds: ${{ secrets.PROD_SECRECT }}
 
     - name: create a resource group on Azure
-      uses: Azure/CLI@v1
+      uses: Azure/CLI@v2
       with:
         inlineScript: | 
           # #!/bin/bash
@@ -57,27 +56,25 @@ jobs:
           # fi
 
     - name: create a ML workspace on Azure
-      uses: Azure/CLI@v1
-      with:
-        inlineScript: | 
-          #!/bin/bash
-          az extension add -n ml -y
-          if $(az workspace exists --name ${{ github.event.inputs.workspace }}); then
-              echo "workspace already exists with this name"
-          else
-            az ml workspace create --name ${{ github.event.inputs.workspace }} --resource-group ${{ github.event.inputs.resource_group }}
-            az configure --defaults workspace=${{ github.event.inputs.workspace }}
-            echo "done! workspace is created"
-          fi
+      run: |
+        az extension add -n ml -y --allow-preview false
+        echo HEREEEEEEE
+        az ml workspace create -n ${{ github.event.inputs.workspace }} -g ${{ github.event.inputs.resource_group }}
+        az configure --defaults workspace=${{ github.event.inputs.workspace }}
+      # uses: Azure/CLI@v2
+      # with:
+        # inlineScript: | 
+          # az ml workspace create -n '${{ github.event.inputs.workspace }}' -g '${{ github.event.inputs.resource_group }}'
+          # az configure --defaults workspace='${{ github.event.inputs.workspace }}'
     - name: create a compute cluster
       run: |
-        az extension add -n ml -y
+        az extension add -n ml -y --allow-preview false
         az ml compute create --name ${{github.event.inputs.instance_name}} --size STANDARD_DS11_V2 --max-instances 2 --type AmlCompute --resource-group ${{github.event.inputs.resource_group}} --workspace-name ${{github.event.inputs.workspace}}
-    - name: add a data asset to azure workspace
+    - name: add a data PROD asset to azure workspace
       run: |
-        az extension add -n ml -y
-        az ml data create --name diabetes-dev-folder --path "experimentation/data" --resource-group ${{github.event.inputs.resource_group}} --workspace-name ${{github.event.inputs.workspace}}
+        az extension add -n ml -y --allow-preview false
+        az ml data create --name diabetes-prod-folder --path "production/data" --resource-group ${{github.event.inputs.resource_group}} --workspace-name ${{github.event.inputs.workspace}}
     - name: create an Azure ML job
       run: |
-        az extension add -n ml -y
+        az extension add -n ml -y --allow-preview false
         az ml job create --file "src/job.yml" --resource-group ${{github.event.inputs.resource_group}} --workspace-name ${{github.event.inputs.workspace}}
