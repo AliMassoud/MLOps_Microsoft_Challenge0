@@ -27,7 +27,7 @@ on:
 jobs:
   build_env_and_train:
     runs-on: ubuntu-latest
-    environment: Prod_env
+    environment: Dev_env
     permissions:
       contents: read
       pages: write
@@ -38,7 +38,7 @@ jobs:
     - name: Azure login
       uses: azure/login@v2
       with:
-        creds: ${{ secrets.PROD_SECRECT }}
+        creds: ${{ secrets.DEV_CRED }}
 
     - name: create a resource group on Azure
       uses: Azure/CLI@v1
@@ -58,6 +58,7 @@ jobs:
       with:
         inlineScript: | 
           #!/bin/bash
+          pip install setuptools
           az extension add -n ml -y
           if $(az workspace exists --name ${{ github.event.inputs.workspace }}); then
               echo "workspace already exists with this name"
