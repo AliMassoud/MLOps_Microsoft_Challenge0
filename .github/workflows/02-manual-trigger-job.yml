@@ -54,22 +54,22 @@ jobs:
           # fi
 
     - name: create a ML workspace on Azure
-      uses: Azure/CLI@v1
+      uses: Azure/CLI@v2
       with:
         inlineScript: | 
           #!/bin/bash
-          az extension add -n ml -y
+          az extension add -n ml -y --allow-preview false
           az ml workspace create -n '${{ github.event.inputs.workspace }}' -g '${{ github.event.inputs.resource_group }}'
           az configure --defaults workspace='${{ github.event.inputs.workspace }}'
     - name: create a compute cluster
       run: |
-        az extension add -n ml -y
+        az extension add -n ml -y --allow-preview false
         az ml compute create --name ${{github.event.inputs.instance_name}} --size STANDARD_DS11_V2 --max-instances 2 --type AmlCompute --resource-group ${{github.event.inputs.resource_group}} --workspace-name ${{github.event.inputs.workspace}}
     - name: add a data PROD asset to azure workspace
       run: |
-        az extension add -n ml -y
+        az extension add -n ml -y --allow-preview false
         az ml data create --name diabetes-prod-folder --path "production/data" --resource-group ${{github.event.inputs.resource_group}} --workspace-name ${{github.event.inputs.workspace}}
     - name: create an Azure ML job
       run: |
-        az extension add -n ml -y
+        az extension add -n ml -y --allow-preview false
         az ml job create --file "src/job.yml" --resource-group ${{github.event.inputs.resource_group}} --workspace-name ${{github.event.inputs.workspace}}
