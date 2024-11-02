@@ -34,7 +34,7 @@ jobs:
       id-token: write
     steps:
     - name: Check out repo
-      uses: actions/checkout@main
+      uses: actions/checkout@test_code_check
     - name: Azure login
       uses: azure/login@v2
       with:
