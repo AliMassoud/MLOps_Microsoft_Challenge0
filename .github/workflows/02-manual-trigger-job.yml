@@ -59,8 +59,8 @@ jobs:
         inlineScript: | 
           #!/bin/bash
           az extension add -n ml -y
-          az ml workspace create -n ${{ github.event.inputs.workspace }} -g ${{ github.event.inputs.resource_group }}
-          az configure --defaults workspace=${{ github.event.inputs.workspace }}
+          az ml workspace create -n '${{ github.event.inputs.workspace }}' -g '${{ github.event.inputs.resource_group }}'
+          az configure --defaults workspace='${{ github.event.inputs.workspace }}'
     - name: create a compute cluster
       run: |
         az extension add -n ml -y
