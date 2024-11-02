@@ -58,7 +58,7 @@ jobs:
       with:
         inlineScript: | 
           #!/bin/bash
-          python3 -m pip install setuptools
+          python3 -m pip3 install setuptools
           az extension add -n ml -y
           if $(az workspace exists --name ${{ github.event.inputs.workspace }}); then
               echo "workspace already exists with this name"
