@@ -27,7 +27,7 @@ on:
 jobs:
   build_env_and_train:
     runs-on: ubuntu-latest
-    environment: Dev_env
+    environment: Prod_env
     permissions:
       contents: read
       pages: write
@@ -38,7 +38,7 @@ jobs:
     - name: Azure login
       uses: azure/login@v2
       with:
-        creds: ${{ secrets.DEV_CRED }}
+        creds: ${{ secrets.PROD_SECRECT }}
 
     - name: create a resource group on Azure
       uses: Azure/CLI@v1
